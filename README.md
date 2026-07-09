@@ -46,32 +46,26 @@ Each migration is executed only once and tracked by checksum.
 
 
 
-## Project Strocture 
+## Project structure 
 
+```text
 WarehouseManagement
 │
-├── Core
-│ ├── Connection Management
-│ ├── Database Initialization
-│ └── Migration Engine
+├── Data
+│   ├── Connection Management
+│   └── Database Access
 │
 ├── Database
-│ └── SQL Migration Scripts
+│   └── SQL Migration Scripts
 │
 ├── Security
-│ ├── Password Hashing
-│ ├── Authentication
-│ └── User Session
-│
-├── Data
-│ └── Data Access Layer
-│
-├── Services
-│ └── Business Logic
+│   ├── Password Hashing
+│   ├── Authentication
+│   └── User Session
 │
 └── Forms
-└── User Interface
-
+    └── User Interface
+```
 
 ## Development Status
 
