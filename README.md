@@ -46,40 +46,56 @@ Each migration is executed only once and tracked by checksum.
 
 
 
-## Project structure 
+## Project Structure
 
 ```text
 WarehouseManagement
 │
+├── Core
+│   └── Database
+│       └── Database Migration Engine
+│
 ├── Data
-│   ├── Connection Management
-│   └── Database Access
+│   ├── Database Connection Management
+│   ├── Data Module
+│   └── Database Initialization
 │
 ├── Database
-│   └── SQL Migration Scripts
+│   └── Scripts
+│       └── Versioned SQL Migration Scripts
 │
 ├── Security
+│   ├── Authentication Service
 │   ├── Password Hashing
-│   ├── Authentication
-│   └── User Session
+│   ├── User Seeder
+│   └── User Session Management
 │
-└── Forms
-    └── User Interface
+├── Forms
+│   └── User Interface
+│
+└── README.md
 ```
 
 ## Development Status
 
-Currently implemented:
+Current Version: 0.1.0
 
-✔ Database initialization  
-✔ SQL migration system  
-✔ User security foundation  
-✔ Role and permission schema  
-✔ Warehouse and product database foundation  
+Implemented:
 
-In progress:
+- Automatic database creation
+- SQL Server connection management using FireDAC
+- Database migration engine
+- Version-controlled SQL scripts
+- Migration checksum validation
+- User authentication foundation
+- Role and permission database schema
+- Warehouse and product database foundation
 
-- Login UI
+In Progress:
+
+- Login user interface
+- User management
 - Product management
 - Inventory transactions
-- Reports
+- Reporting system
+```

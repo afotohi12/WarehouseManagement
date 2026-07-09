@@ -134,11 +134,11 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Data\uDataBaseinitializer.pas"/>
-        <DCCReference Include="Units\uDatabaseMigrator.pas"/>
         <DCCReference Include="Security\uPasswordHasher.pas"/>
         <DCCReference Include="Security\uUserSession.pas"/>
         <DCCReference Include="Security\uAuthenticationService.pas"/>
         <DCCReference Include="Security\uUserSeeder.pas"/>
+        <DCCReference Include="Core\DataBase\uDatabaseMigrator.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

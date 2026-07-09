@@ -6,11 +6,11 @@ uses
   uConnectionManager in 'Data\uConnectionManager.pas',
   dmDataBase in 'Data\dmDataBase.pas' {DataModule1: TDataModule},
   uDataBaseinitializer in 'Data\uDataBaseinitializer.pas',
-  uDatabaseMigrator in 'Units\uDatabaseMigrator.pas',
   uPasswordHasher in 'Security\uPasswordHasher.pas',
   uUserSession in 'Security\uUserSession.pas',
   uAuthenticationService in 'Security\uAuthenticationService.pas',
-  uUserSeeder in 'Security\uUserSeeder.pas';
+  uUserSeeder in 'Security\uUserSeeder.pas',
+  uDatabaseMigrator in 'Core\DataBase\uDatabaseMigrator.pas';
 
 {$R *.res}
 

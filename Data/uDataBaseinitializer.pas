@@ -7,7 +7,9 @@ uses
   FireDAC.Comp.Client,
   FireDAC.Comp.DataSet,
   uConnectionManager,
+  uUserSeeder,
   uDatabaseMigrator;
+
 
 type
 
@@ -34,7 +36,7 @@ type
 
 implementation
 
-uses uUserSeeder;
+
 
 
 class function TDatabaseInitializer.DatabaseExists(
