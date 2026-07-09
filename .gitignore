@@ -1,0 +1,31 @@
+# Delphi compiled files
+*.dcu
+*.exe
+*.dll
+*.bpl
+*.dcp
+
+# Delphi IDE files
+*.dsk
+*.local
+*.identcache
+*.stat
+
+# Backup files
+*.~*
+*.bak
+
+# Build folders
+Win32/
+Win64/
+Debug/
+Release/
+
+# Database connection config
+Config/Config.ini
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp

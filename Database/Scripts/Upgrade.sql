@@ -1,0 +1,39 @@
+/*VERSION:1*/
+
+-- جدول کاربران
+CREATE TABLE Users
+(
+    ID INT IDENTITY(1,1) PRIMARY KEY,
+    UserName NVARCHAR(100) NOT NULL,
+    PasswordHash NVARCHAR(256) NOT NULL,
+    FullName NVARCHAR(200) NULL,
+    IsActive BIT NOT NULL DEFAULT(1),
+    CreateDate DATETIME NOT NULL DEFAULT(GETDATE())
+)
+
+GO
+
+
+-- جدول تنظیمات برنامه
+CREATE TABLE AppSettings
+(
+    ID INT IDENTITY(1,1) PRIMARY KEY,
+    SettingKey NVARCHAR(100) NOT NULL,
+    SettingValue NVARCHAR(MAX) NULL,
+    CreateDate DATETIME NOT NULL DEFAULT(GETDATE())
+)
+
+GO
+
+
+-- جدول ثبت خطاهای برنامه
+CREATE TABLE ApplicationLog
+(
+    ID BIGINT IDENTITY(1,1) PRIMARY KEY,
+    LogType NVARCHAR(50) NOT NULL,
+    Message NVARCHAR(MAX) NULL,
+    StackTrace NVARCHAR(MAX) NULL,
+    LogDate DATETIME NOT NULL DEFAULT(GETDATE())
+)
+
+GO

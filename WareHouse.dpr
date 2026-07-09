@@ -1,0 +1,23 @@
+program WareHouse;
+
+uses
+  Vcl.Forms,
+  MainForm in 'MainForm.pas' {Form2},
+  uConnectionManager in 'Data\uConnectionManager.pas',
+  dmDataBase in 'Data\dmDataBase.pas' {DataModule1: TDataModule},
+  uDataBaseinitializer in 'Data\uDataBaseinitializer.pas',
+  uDatabaseMigrator in 'Units\uDatabaseMigrator.pas',
+  uPasswordHasher in 'Security\uPasswordHasher.pas',
+  uUserSession in 'Security\uUserSession.pas',
+  uAuthenticationService in 'Security\uAuthenticationService.pas',
+  uUserSeeder in 'Security\uUserSeeder.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TDataModule1, DataModule1);
+  Application.Run;
+end.
