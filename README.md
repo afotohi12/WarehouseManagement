@@ -53,27 +53,27 @@ WarehouseManagement
 │
 ├── Core
 │   └── Database
-│       └── Database Migration Engine
+│       └── uDatabaseMigrator.pas
 │
 ├── Data
-│   ├── Database Connection Management
-│   ├── Data Module
-│   └── Database Initialization
+│   ├── dmDatabase.pas
+│   ├── uConnectionManager.pas
+│   └── uDatabaseInitializer.pas
 │
 ├── Database
 │   └── Scripts
-│       └── Versioned SQL Migration Scripts
+│       └── Upgrade.sql
 │
 ├── Security
-│   ├── Authentication Service
-│   ├── Password Hashing
-│   ├── User Seeder
-│   └── User Session Management
+│   ├── uAuthenticationService.pas
+│   ├── uPasswordHasher.pas
+│   ├── uUserSeeder.pas
+│   └── uUserSession.pas
 │
 ├── Forms
-│   └── User Interface
 │
-└── README.md
+├── README.md
+└── LICENSE
 ```
 
 ## Development Status
