@@ -586,26 +586,25 @@ var
   I: Integer;
 
 
-
 procedure ExecuteBatch;
-
 begin
-
-  if Trim(Batch.Text)='' then
-
+  if Trim(Batch.Text) = '' then
     Exit;
 
-
-  Q.SQL.Text :=
-    Batch.Text;
-
-
-  Q.ExecSQL;
-
+  try
+    Q.Close;
+    Q.SQL.Text := Batch.Text;
+    Q.ExecSQL;
+  except
+    on E: Exception do
+      raise Exception.Create(
+        E.Message + sLineBreak +
+        '----------------------------' + sLineBreak +
+        Batch.Text
+      );
+  end;
 
   Batch.Clear;
-
-
 end;
 
 
