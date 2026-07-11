@@ -139,6 +139,10 @@
         <DCCReference Include="Security\uAuthenticationService.pas"/>
         <DCCReference Include="Security\uUserSeeder.pas"/>
         <DCCReference Include="Core\DataBase\uDatabaseMigrator.pas"/>
+        <DCCReference Include="Forms\frmLogin.pas">
+            <Form>TfrmLogin</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

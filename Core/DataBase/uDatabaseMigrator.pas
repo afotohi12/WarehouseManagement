@@ -539,14 +539,19 @@ begin
           );
 
 
-        if OldChecksum <> NewChecksum then
-
-          raise Exception.CreateFmt(
-            'Migration version %d modified.',
-            [
-              Version
-            ]
-          );
+          if OldChecksum <> NewChecksum then
+          begin
+            raise Exception.CreateFmt(
+              'Migration Version %d has been modified.' + sLineBreak +
+              'Stored Checksum : %s' + sLineBreak +
+              'Current Checksum: %s',
+              [
+                Version,
+                OldChecksum,
+                NewChecksum
+              ]
+            );
+          end;
 
 
       finally
@@ -586,25 +591,26 @@ var
   I: Integer;
 
 
+
 procedure ExecuteBatch;
+
 begin
-  if Trim(Batch.Text) = '' then
+
+  if Trim(Batch.Text)='' then
+
     Exit;
 
-  try
-    Q.Close;
-    Q.SQL.Text := Batch.Text;
-    Q.ExecSQL;
-  except
-    on E: Exception do
-      raise Exception.Create(
-        E.Message + sLineBreak +
-        '----------------------------' + sLineBreak +
-        Batch.Text
-      );
-  end;
+
+  Q.SQL.Text :=
+    Batch.Text;
+
+
+  Q.ExecSQL;
+
 
   Batch.Clear;
+
+
 end;
 
 
@@ -812,20 +818,31 @@ begin
 
           begin
 
-            AConnection.Rollback;
+           if AConnection.InTransaction then
+              AConnection.Rollback;
 
+            AConnection.StartTransaction;
 
+            try
 
-            WriteLog(
-              AConnection,
-              Version,
-              Checksum,
-              False,
-              E.Message
-            );
+              WriteLog(
+                AConnection,
+                Version,
+                Checksum,
+                False,
+                E.Message
+              );
 
+              AConnection.Commit;
 
-            raise;
+              except
+
+                if AConnection.InTransaction then
+                  AConnection.Rollback;
+
+              end;
+
+              raise;
 
 
           end;

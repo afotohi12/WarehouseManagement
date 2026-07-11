@@ -40,33 +40,44 @@ begin
       AConnection;
 
 
-    Q.SQL.Text :=
-      'IF NOT EXISTS '+
-      '('+
-      ' SELECT 1 FROM Users WHERE UserName = :UserName '+
-      ') '+
-      'BEGIN '+
-      ' INSERT INTO Users '+
-      '('+
-      ' UserName, '+
-      ' PasswordHash, '+
-      ' FullName, '+
-      ' IsActive '+
-      ') '+
-      ' VALUES '+
-      '('+
-      ' :UserName, '+
-      ' :PasswordHash, '+
-      ' :FullName, '+
-      ' 1 '+
-      ') '+
-      'END';
-
-
     PasswordHash :=
       TPasswordHasher.HashPassword(
         'admin'
       );
+
+
+    Q.SQL.Text :=
+      'IF NOT EXISTS ' +
+      '(' +
+      ' SELECT 1 FROM Users WHERE UserName = :UserName ' +
+      ') ' +
+      'BEGIN ' +
+      ' INSERT INTO Users ' +
+      '(' +
+      ' UserName, ' +
+      ' PasswordHash, ' +
+      ' FirstName, ' +
+      ' LastName, ' +
+      ' IsActive ' +
+      ') ' +
+      ' VALUES ' +
+      '(' +
+      ' :UserName, ' +
+      ' :PasswordHash, ' +
+      ' :FirstName, ' +
+      ' :LastName, ' +
+      ' 1 ' +
+      ') ' +
+      'END ' +
+
+      'ELSE ' +
+
+      'BEGIN ' +
+      ' UPDATE Users ' +
+      ' SET PasswordHash = :PasswordHash ' +
+      ' WHERE UserName = :UserName ' +
+      ' AND (PasswordHash IS NULL OR PasswordHash = '''') ' +
+      'END';
 
 
     Q.ParamByName('UserName').AsString :=
@@ -77,8 +88,12 @@ begin
       PasswordHash;
 
 
-    Q.ParamByName('FullName').AsString :=
-      'System Administrator';
+    Q.ParamByName('FirstName').AsString :=
+      'System';
+
+
+    Q.ParamByName('LastName').AsString :=
+      'Administrator';
 
 
     Q.ExecSQL;

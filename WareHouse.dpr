@@ -10,7 +10,8 @@ uses
   uUserSession in 'Security\uUserSession.pas',
   uAuthenticationService in 'Security\uAuthenticationService.pas',
   uUserSeeder in 'Security\uUserSeeder.pas',
-  uDatabaseMigrator in 'Core\DataBase\uDatabaseMigrator.pas';
+  uDatabaseMigrator in 'Core\DataBase\uDatabaseMigrator.pas',
+  frmLogin in 'Forms\frmLogin.pas' {TfrmLogin};
 
 {$R *.res}
 
@@ -19,5 +20,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TForm2, Form2);
   Application.CreateForm(TDataModule1, DataModule1);
+  Application.CreateForm(TTfrmLogin, TfrmLogin);
   Application.Run;
 end.
