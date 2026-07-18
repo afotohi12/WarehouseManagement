@@ -91,6 +91,11 @@ Implemented:
 - Role and permission database schema
 - Warehouse and product database foundation
 
+## Software Screenshots
+
+![Login Screen](Images/Screenshots/LoginForm.png)
+
+
 In Progress:
 
 - Login user interface
