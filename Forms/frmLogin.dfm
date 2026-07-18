@@ -1,9 +1,9 @@
 object TfrmLogin: TTfrmLogin
   Left = 0
   Top = 0
-  Caption = 'TfrmLogin'
-  ClientHeight = 138
-  ClientWidth = 296
+  Caption = 'Login Form '
+  ClientHeight = 239
+  ClientWidth = 291
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,23 +14,23 @@ object TfrmLogin: TTfrmLogin
   OnShow = FormShow
   TextHeight = 15
   object lblUsername: TLabel
-    Left = 8
-    Top = 8
+    Left = 12
+    Top = 42
     Width = 54
-    Height = 15
+    Height = 20
     Caption = 'userName'
   end
   object lblPassword: TLabel
-    Left = 10
-    Top = 40
+    Left = 14
+    Top = 87
     Width = 52
     Height = 15
     Caption = 'passWord'
   end
   object btnLogin: TButton
     Left = 8
-    Top = 72
-    Width = 105
+    Top = 184
+    Width = 121
     Height = 41
     Caption = 'Login'
     Default = True
@@ -38,9 +38,9 @@ object TfrmLogin: TTfrmLogin
     OnClick = btnLoginClick
   end
   object btnExit: TButton
-    Left = 174
-    Top = 66
-    Width = 114
+    Left = 162
+    Top = 184
+    Width = 121
     Height = 41
     Cancel = True
     Caption = 'Exit'
@@ -48,25 +48,25 @@ object TfrmLogin: TTfrmLogin
     OnClick = btnExitClick
   end
   object edtUsername: TEdit
-    Left = 112
-    Top = 8
+    Left = 107
+    Top = 32
     Width = 176
-    Height = 23
+    Height = 36
     TabOrder = 2
   end
   object edtPassword: TEdit
-    Left = 112
-    Top = 37
+    Left = 107
+    Top = 76
     Width = 176
-    Height = 23
+    Height = 36
     PasswordChar = '*'
     TabOrder = 3
   end
   object chkRememberMe: TCheckBox
-    Left = 8
-    Top = 119
-    Width = 105
-    Height = 17
+    Left = 14
+    Top = 135
+    Width = 121
+    Height = 26
     Caption = 'Remember Me '
     TabOrder = 4
   end
