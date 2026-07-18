@@ -1,4 +1,4 @@
-object DataModule1: TDataModule1
+object TDMDatabase: TTDMDatabase
   OnCreate = DataModuleCreate
   Height = 445
   Width = 629

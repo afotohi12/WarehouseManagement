@@ -8,8 +8,7 @@ uses
   FireDAC.Stan.Def,FireDAC.Stan.Async,FireDAC.Stan.Param,FireDAC.UI.Intf;
 
 type
-  TForm2 = class(TForm)
-    procedure FormCreate(Sender: TObject);
+  TfrmMain = class(TForm)
   private
     { Private declarations }
   public
@@ -17,17 +16,11 @@ type
   end;
 
 var
-  Form2: TForm2;
+  frmMain: TfrmMain;
 
 implementation
 
 {$R *.dfm}
 
-uses uDataBaseinitializer;
-
-procedure TForm2.FormCreate(Sender: TObject);
-begin
-TDatabaseInitializer.Initialize;
-end;
 
 end.

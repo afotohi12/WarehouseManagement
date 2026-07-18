@@ -1,7 +1,7 @@
-object frmMain: TfrmMain
+object frmBase: TfrmBase
   Left = 0
   Top = 0
-  Caption = 'WareHouse'
+  Caption = 'frmBase'
   ClientHeight = 441
   ClientWidth = 624
   Color = clBtnFace

@@ -103,6 +103,8 @@
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
@@ -124,23 +126,28 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="MainForm.pas">
-            <Form>Form2</Form>
-            <FormType>dfm</FormType>
+            <Form>frmMain</Form>
         </DCCReference>
-        <DCCReference Include="Data\uConnectionManager.pas"/>
         <DCCReference Include="Data\dmDataBase.pas">
-            <Form>DataModule1</Form>
-            <FormType>dfm</FormType>
+            <Form>TDMDatabase</Form>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="Forms\frmLogin.pas">
+            <Form>TfrmLogin</Form>
+        </DCCReference>
+        <DCCReference Include="Data\uConnectionManager.pas"/>
         <DCCReference Include="Data\uDataBaseinitializer.pas"/>
         <DCCReference Include="Security\uPasswordHasher.pas"/>
         <DCCReference Include="Security\uUserSession.pas"/>
         <DCCReference Include="Security\uAuthenticationService.pas"/>
         <DCCReference Include="Security\uUserSeeder.pas"/>
         <DCCReference Include="Core\DataBase\uDatabaseMigrator.pas"/>
-        <DCCReference Include="Forms\frmLogin.pas">
-            <Form>TfrmLogin</Form>
+        <DCCReference Include="Security\uUserService.pas"/>
+        <DCCReference Include="Security\uPermissionService.pas"/>
+        <DCCReference Include="Security\uAuthorization.pas"/>
+        <DCCReference Include="Security\uRememberMe.pas"/>
+        <DCCReference Include="Forms\uBaseForm.pas">
+            <Form>frmBase</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
@@ -163,6 +170,10 @@
                 <Source>
                     <Source Name="MainSource">WareHouse.dpr</Source>
                 </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k290.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp290.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="5">
                 <DeployFile LocalName="Win32\Debug\WareHouse.exe" Configuration="Debug" Class="ProjectOutput">
@@ -1116,6 +1127,7 @@
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">True</Platform>
             </Platforms>
+            <ModelSupport>False</ModelSupport>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>

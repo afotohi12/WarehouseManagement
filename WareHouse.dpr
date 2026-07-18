@@ -2,24 +2,48 @@ program WareHouse;
 
 uses
   Vcl.Forms,
-  MainForm in 'MainForm.pas' {Form2},
+  System.UITypes,
+  Vcl.Themes,
+  Vcl.Styles,
+  System.SysUtils,
+  Vcl.Dialogs,
+  MainForm in 'MainForm.pas' {frmMain},
+  dmDataBase in 'Data\dmDataBase.pas' {TDMDatabase: TDataModule},
+  frmLogin in 'Forms\frmLogin.pas' {TfrmLogin},
   uConnectionManager in 'Data\uConnectionManager.pas',
-  dmDataBase in 'Data\dmDataBase.pas' {DataModule1: TDataModule},
   uDataBaseinitializer in 'Data\uDataBaseinitializer.pas',
   uPasswordHasher in 'Security\uPasswordHasher.pas',
   uUserSession in 'Security\uUserSession.pas',
   uAuthenticationService in 'Security\uAuthenticationService.pas',
   uUserSeeder in 'Security\uUserSeeder.pas',
   uDatabaseMigrator in 'Core\DataBase\uDatabaseMigrator.pas',
-  frmLogin in 'Forms\frmLogin.pas' {TfrmLogin};
+  uUserService in 'Security\uUserService.pas',
+  uPermissionService in 'Security\uPermissionService.pas',
+  uAuthorization in 'Security\uAuthorization.pas',
+  uRememberMe in 'Security\uRememberMe.pas',
+  uBaseForm in 'Forms\uBaseForm.pas' {frmBase};
 
 {$R *.res}
 
+
 begin
   Application.Initialize;
-  Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm2, Form2);
-  Application.CreateForm(TDataModule1, DataModule1);
-  Application.CreateForm(TTfrmLogin, TfrmLogin);
+
+Application.MainFormOnTaskbar := True;
+
+  TDatabaseInitializer.Initialize;
+
+  Application.CreateForm(TTDMDatabase, TDMDatabase);
+
+  with TTfrmLogin.Create(nil) do
+  try
+    if ShowModal <> mrOk then
+      Exit;
+  finally
+    Free;
+  end;
+
+  Application.CreateForm(TfrmMain, frmMain);
+
   Application.Run;
 end.

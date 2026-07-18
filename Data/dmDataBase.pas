@@ -20,7 +20,7 @@ uses
 
 type
 
-  TDataModule1 = class(TDataModule)
+  TTDMDatabase = class(TDataModule)
     FDConnectionMain: TFDConnection;
     FDPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink;
 
@@ -38,7 +38,7 @@ type
 
 
 var
-  DataModule1: TDataModule1;
+  TDMDatabase: TTDMDatabase;
 
 
 implementation
@@ -52,24 +52,17 @@ implementation
 
 
 
-procedure TDataModule1.DataModuleCreate(Sender: TObject);
+procedure TTDMDatabase.DataModuleCreate(Sender: TObject);
 begin
 
-  TConnectionManager.ConfigureForMaster(
-    FDConnectionMain
-  );
-
-
-  TConnectionManager.Connect(
-    FDConnectionMain
-  );
+InitializeDatabase;
 
 end;
 
 
 
 
-procedure TDataModule1.InitializeDatabase;
+procedure TTDMDatabase.InitializeDatabase;
 begin
 
   try
@@ -102,7 +95,7 @@ end;
 
 
 
-procedure TDataModule1.DataModuleDestroy(
+procedure TTDMDatabase.DataModuleDestroy(
   Sender: TObject
 );
 begin
