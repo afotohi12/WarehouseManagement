@@ -21,7 +21,9 @@ uses
   uPermissionService in 'Security\uPermissionService.pas',
   uAuthorization in 'Security\uAuthorization.pas',
   uRememberMe in 'Security\uRememberMe.pas',
-  uBaseForm in 'Forms\uBaseForm.pas' {frmBase};
+  uBaseForm in 'Forms\uBaseForm.pas' {frmBase},
+  uFormHost in 'Forms\uFormHost.pas',
+  frmDashboard in 'Forms\frmDashboard.pas' {Form1};
 
 {$R *.res}
 
@@ -34,7 +36,6 @@ Application.MainFormOnTaskbar := True;
   TDatabaseInitializer.Initialize;
 
   Application.CreateForm(TTDMDatabase, TDMDatabase);
-
   with TTfrmLogin.Create(nil) do
   try
     if ShowModal <> mrOk then
