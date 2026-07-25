@@ -37,11 +37,11 @@ object frmMain: TfrmMain
       ExplicitHeight = 15
     end
     object btnLogout: TSpeedButton
-      Left = 776
-      Top = 1
-      Width = 49
-      Height = 22
-      Caption = 'LogOut'
+      Left = 744
+      Top = 0
+      Width = 65
+      Height = 32
+      Caption = #9211' Logout'
     end
   end
   object pnlMenu: TPanel
@@ -59,6 +59,7 @@ object frmMain: TfrmMain
       Height = 45
       Cursor = crHandPoint
       Align = alTop
+      Caption = #55356#57312' Dashboard'
       Flat = True
       OnClick = btnDashboardClick
     end
@@ -69,6 +70,7 @@ object frmMain: TfrmMain
       Height = 45
       Cursor = crHandPoint
       Align = alTop
+      Caption = #55357#56550' Products'
       Flat = True
       ExplicitLeft = 197
       ExplicitTop = 32
@@ -81,8 +83,10 @@ object frmMain: TfrmMain
       Height = 45
       Cursor = crHandPoint
       Align = alTop
+      Caption = #55357#56421' Customers'
       Flat = True
-      ExplicitTop = 46
+      ExplicitLeft = -3
+      ExplicitTop = 85
     end
     object btnSuppliers: TSpeedButton
       Left = 1
@@ -91,6 +95,7 @@ object frmMain: TfrmMain
       Height = 45
       Cursor = crHandPoint
       Align = alTop
+      Caption = #55357#56986' Suppliers'
       Flat = True
       ExplicitLeft = 197
       ExplicitTop = 48
@@ -103,6 +108,7 @@ object frmMain: TfrmMain
       Height = 45
       Cursor = crHandPoint
       Align = alTop
+      Caption = #55356#57314' Warehouse'
       Flat = True
       ExplicitLeft = 197
       ExplicitTop = 56
@@ -115,6 +121,7 @@ object frmMain: TfrmMain
       Height = 45
       Cursor = crHandPoint
       Align = alTop
+      Caption = #55358#56830' Invoices'
       Flat = True
       ExplicitLeft = 197
       ExplicitTop = 64
@@ -127,6 +134,7 @@ object frmMain: TfrmMain
       Height = 45
       Cursor = crHandPoint
       Align = alTop
+      Caption = #55357#56522' Reports'
       Flat = True
       ExplicitLeft = 197
       ExplicitTop = 72
@@ -139,10 +147,10 @@ object frmMain: TfrmMain
       Height = 45
       Cursor = crHandPoint
       Align = alTop
+      Caption = #55357#56420' Users'
       Flat = True
-      ExplicitLeft = 197
-      ExplicitTop = 80
-      ExplicitWidth = 23
+      ExplicitLeft = -3
+      ExplicitTop = 322
     end
     object btnSettings: TSpeedButton
       Left = 1
@@ -151,6 +159,7 @@ object frmMain: TfrmMain
       Height = 45
       Cursor = crHandPoint
       Align = alTop
+      Caption = #9881' Settings'
       Flat = True
       ExplicitLeft = 197
       ExplicitTop = 88
@@ -173,9 +182,10 @@ object frmMain: TfrmMain
       Height = 434
       Align = alClient
       BevelOuter = bvNone
+      Caption = #55356#57312' Dashboard'
       TabOrder = 0
-      ExplicitWidth = 729
-      ExplicitHeight = 426
+      ExplicitLeft = 5
+      ExplicitTop = -4
       object lblPageTitle: TLabel
         Left = 20
         Top = 20

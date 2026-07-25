@@ -1,0 +1,28 @@
+unit frmProducts;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
+  Vcl.ComCtrls, Vcl.ToolWin, uBaseForm;
+
+type
+  TTfrmProducts = class(TfrmBase)
+    ToolBar1: TToolBar;
+    StatusBar1: TStatusBar;
+    DBGrid1: TDBGrid;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  TfrmProducts: TTfrmProducts;
+
+implementation
+
+{$R *.dfm}
+
+end.

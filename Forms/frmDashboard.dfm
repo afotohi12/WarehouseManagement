@@ -10,6 +10,7 @@ object TfrmDashboard: TTfrmDashboard
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
   object pnlProducts: TPanel
     Left = 8

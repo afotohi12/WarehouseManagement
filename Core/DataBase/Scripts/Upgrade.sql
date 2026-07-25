@@ -981,3 +981,52 @@ SET IsAdmin = 1
 WHERE UserName = 'admin';
 GO
 
+
+
+/*VERSION:10*/
+
+------------------------------------------------------------
+--Feature : Add Products Table 
+
+------------------------------------------------------------
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.objects
+    WHERE object_id = OBJECT_ID(N'dbo.Products')
+      AND type = 'U'
+)
+BEGIN
+
+    CREATE TABLE dbo.Products
+    (
+        ProductID      INT IDENTITY(1,1) NOT NULL,
+        ProductCode    NVARCHAR(50) NOT NULL,
+        ProductName    NVARCHAR(200) NOT NULL,
+        Barcode        NVARCHAR(100) NULL,
+        CategoryID     INT NULL,
+        UnitID         INT NULL,
+        PurchasePrice  DECIMAL(18,2) NOT NULL CONSTRAINT DF_Products_PurchasePrice DEFAULT (0),
+        SalePrice      DECIMAL(18,2) NOT NULL CONSTRAINT DF_Products_SalePrice DEFAULT (0),
+        MinStock       DECIMAL(18,2) NOT NULL CONSTRAINT DF_Products_MinStock DEFAULT (0),
+        CurrentStock   DECIMAL(18,2) NOT NULL CONSTRAINT DF_Products_CurrentStock DEFAULT (0),
+        Description    NVARCHAR(500) NULL,
+        IsActive       BIT NOT NULL CONSTRAINT DF_Products_IsActive DEFAULT (1),
+        CreatedAt      DATETIME NOT NULL CONSTRAINT DF_Products_CreatedAt DEFAULT (GETDATE()),
+        UpdatedAt      DATETIME NULL,
+
+        CONSTRAINT PK_Products
+        PRIMARY KEY CLUSTERED (ProductID)
+    );
+
+    CREATE UNIQUE INDEX IX_Products_ProductCode
+        ON dbo.Products(ProductCode);
+
+    CREATE INDEX IX_Products_ProductName
+        ON dbo.Products(ProductName);
+
+    CREATE INDEX IX_Products_Barcode
+        ON dbo.Products(Barcode);
+
+END
+

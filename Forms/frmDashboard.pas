@@ -4,10 +4,10 @@
 
   uses
     Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-    Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
+    Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, uBaseForm;
 
   type
-    TTfrmDashboard = class(TForm)
+    TTfrmDashboard = class(TfrmBase)
     pnlProducts: TPanel;
     pnlCustomers: TPanel;
     pnlInvoices: TPanel;
@@ -20,6 +20,7 @@
     lblInvoiceTitle: TLabel;
     lblStockCount: TLabel;
     lblStockTitle: TLabel;
+    procedure FormShow(Sender: TObject);
     private
       { Private declarations }
     public
@@ -34,4 +35,14 @@
 
   {$R *.dfm}
 
-  end.
+uses uUIHelper;
+
+  procedure TTfrmDashboard.FormShow(Sender: TObject);
+begin
+  TUIHelper.RoundPanel(pnlProducts);
+  TUIHelper.RoundPanel(pnlCustomers);
+  TUIHelper.RoundPanel(pnlInvoices);
+  TUIHelper.RoundPanel(pnlStock);
+end;
+
+end.

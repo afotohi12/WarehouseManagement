@@ -17,7 +17,7 @@ object TfrmLogin: TTfrmLogin
     Left = 12
     Top = 42
     Width = 54
-    Height = 20
+    Height = 15
     Caption = 'userName'
   end
   object lblPassword: TLabel
@@ -51,14 +51,14 @@ object TfrmLogin: TTfrmLogin
     Left = 107
     Top = 32
     Width = 176
-    Height = 36
+    Height = 23
     TabOrder = 2
   end
   object edtPassword: TEdit
     Left = 107
     Top = 76
     Width = 176
-    Height = 36
+    Height = 23
     PasswordChar = '*'
     TabOrder = 3
   end
