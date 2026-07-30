@@ -157,7 +157,11 @@
         </DCCReference>
         <DCCReference Include="Core\UI\uUIHelper.pas"/>
         <DCCReference Include="Forms\frmProducts.pas">
-            <Form>Form2</Form>
+            <Form>TfrmProductEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Forms\frmProductEdit.pas">
+            <Form>Form3</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Data\dmProducts.pas">
@@ -165,6 +169,7 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="Core\UI\uGridHelper.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

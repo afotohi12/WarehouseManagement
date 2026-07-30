@@ -25,8 +25,10 @@ uses
   uFormHost in 'Forms\uFormHost.pas',
   frmDashboard in 'Forms\frmDashboard.pas' {Form1},
   uUIHelper in 'Core\UI\uUIHelper.pas',
-  frmProducts in 'Forms\frmProducts.pas' {Form2},
-  dmProducts in 'Data\dmProducts.pas' {DataModule1: TDataModule};
+  frmProducts in 'Forms\frmProducts.pas' {TfrmProductEdit},
+  frmProductEdit in 'Forms\frmProductEdit.pas' {Form3},
+  dmProducts in 'Data\dmProducts.pas' {DataModule1: TDataModule},
+  uGridHelper in 'Core\UI\uGridHelper.pas';
 
 {$R *.res}
 
@@ -39,7 +41,7 @@ Application.MainFormOnTaskbar := True;
   TDatabaseInitializer.Initialize;
 
   Application.CreateForm(TTDMDatabase, TDMDatabase);
-  Application.CreateForm(TDataModule1, DataModule1);
+  Application.CreateForm(TTdmProducts, TdmProducts);
   with TTfrmLogin.Create(nil) do
   try
     if ShowModal <> mrOk then

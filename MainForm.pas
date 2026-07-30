@@ -28,11 +28,15 @@ type
     btnSettings: TSpeedButton;
     pnlWorkspace: TPanel;
     lblPageTitle: TLabel;
+    lblUserType: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnDashboardClick(Sender: TObject);
+    procedure btnProductsClick(Sender: TObject);
+    procedure btnLogoutClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
 private
     FDashboard: TTfrmDashboard;
-    procedure ShowDashboard;
+    //procedure ShowDashboard;
     procedure MenuMouseEnter(Sender: TObject);
     procedure MenuMouseLeave(Sender: TObject);
     procedure SelectMenu(AButton: TSpeedButton);
@@ -52,11 +56,29 @@ implementation
 
 {$R *.dfm}
 
+uses frmProducts, uAuthenticationService, uUserSession;
+
 procedure TfrmMain.btnDashboardClick(Sender: TObject);
 begin
   lblPageTitle.Caption := 'Dashboard';
   TFormHost.OpenForm(pnlWorkspace, TTfrmDashboard);
   OpenPage(btnDashboard, 'Dashboard',TTfrmDashboard);
+end;
+
+procedure TfrmMain.btnLogoutClick(Sender: TObject);
+begin
+ TAuthenticationService.Logout;
+
+  Close;
+end;
+
+procedure TfrmMain.btnProductsClick(Sender: TObject);
+begin
+  OpenPage(
+    btnProducts,
+    'Products',
+    TTfrmProducts
+  );
 end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
@@ -89,7 +111,27 @@ begin
 
   btnSettings.OnMouseEnter := MenuMouseEnter;
   btnSettings.OnMouseLeave := MenuMouseLeave;
+
+  btnDashboardClick(nil);
 end;
+
+procedure TfrmMain.FormShow(Sender: TObject);
+begin
+  if TUserSession.IsLoggedIn then
+    lblUser.Caption := TUserSession.FullName
+  else
+    lblUser.Caption := 'Guest';
+
+  if TUserSession.IsAdmin then
+    lblUserType.Caption := 'Administrator'
+  else
+    lblUserType.Caption := 'User';
+
+  StatusBar1.Panels[0].Text := 'Database: Connected';
+  StatusBar1.Panels[1].Text := 'Ready';
+  StatusBar1.Panels[2].Text := 'Warehouse Management v1.0';
+
+  end;
 
 procedure TfrmMain.MenuMouseEnter(Sender: TObject);
 begin
@@ -126,7 +168,7 @@ begin
 
   AButton.Font.Style := [fsBold];
 end;
-
+ (*
 procedure TfrmMain.ShowDashboard;
 begin
   if not Assigned(FDashboard) then
@@ -139,5 +181,5 @@ begin
 
   FDashboard.Show;
 end;
-
+   *)
 end.

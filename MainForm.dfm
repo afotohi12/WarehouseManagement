@@ -11,6 +11,7 @@ object frmMain: TfrmMain
   Font.Name = 'Segoe UI'
   Font.Style = []
   OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 15
   object pnlHeader: TPanel
     Left = 0
@@ -28,20 +29,33 @@ object frmMain: TfrmMain
       Caption = 'Warehouse Management'
     end
     object lblUser: TLabel
-      Left = 916
+      Left = 901
       Top = 1
-      Width = 36
+      Width = 51
       Height = 58
       Align = alRight
       Caption = 'Admin'
-      ExplicitHeight = 15
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ExplicitHeight = 31
     end
     object btnLogout: TSpeedButton
       Left = 744
       Top = 0
-      Width = 65
-      Height = 32
-      Caption = #9211' Logout'
+      Width = 73
+      Height = 54
+      Caption = #9211' Logout '#55357#56420
+      OnClick = btnLogoutClick
+    end
+    object lblUserType: TLabel
+      Left = 919
+      Top = 39
+      Width = 3
+      Height = 15
     end
   end
   object pnlMenu: TPanel
@@ -72,6 +86,7 @@ object frmMain: TfrmMain
       Align = alTop
       Caption = #55357#56550' Products'
       Flat = True
+      OnClick = btnProductsClick
       ExplicitLeft = 197
       ExplicitTop = 32
       ExplicitWidth = 23
@@ -184,8 +199,8 @@ object frmMain: TfrmMain
       BevelOuter = bvNone
       Caption = #55356#57312' Dashboard'
       TabOrder = 0
-      ExplicitLeft = 5
-      ExplicitTop = -4
+      ExplicitWidth = 729
+      ExplicitHeight = 426
       object lblPageTitle: TLabel
         Left = 20
         Top = 20
@@ -214,8 +229,10 @@ object frmMain: TfrmMain
       item
         Text = 'Connected'
         Width = 150
+      end
+      item
+        Width = 180
       end>
-    ExplicitTop = 488
-    ExplicitWidth = 951
+    ExplicitTop = 501
   end
 end
