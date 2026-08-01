@@ -19,21 +19,21 @@ object TfrmProducts: TTfrmProducts
     Top = 0
     Width = 640
     Height = 50
-    ButtonHeight = 25
+    ButtonHeight = 15
     Caption = 'ToolBar1'
     TabOrder = 0
     object lblSearch: TLabel
       Left = 0
       Top = 0
-      Width = 44
-      Height = 25
-      Caption = 'Search : '
+      Width = 109
+      Height = 15
+      Caption = #55357#56589' Search products : '
     end
     object edtSearch: TEdit
-      Left = 44
+      Left = 109
       Top = 0
       Width = 121
-      Height = 25
+      Height = 15
       TabOrder = 0
       OnChange = edtSearchChange
     end
@@ -57,6 +57,7 @@ object TfrmProducts: TTfrmProducts
     TitleFont.Height = -12
     TitleFont.Name = 'Segoe UI'
     TitleFont.Style = []
+    OnDrawColumnCell = DBGrid1DrawColumnCell
     OnDblClick = DBGrid1DblClick
   end
   object Panel1: TPanel
@@ -67,13 +68,12 @@ object TfrmProducts: TTfrmProducts
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 3
-    ExplicitTop = 420
     object btnNew: TButton
       Left = 8
       Top = 6
       Width = 75
-      Height = 25
-      Caption = 'New'
+      Height = 36
+      Caption = #10133' New'
       TabOrder = 0
       OnClick = btnNewClick
     end
@@ -81,8 +81,8 @@ object TfrmProducts: TTfrmProducts
       Left = 89
       Top = 6
       Width = 75
-      Height = 25
-      Caption = 'Edit'
+      Height = 36
+      Caption = #9999' Edit'
       TabOrder = 1
       OnClick = btnEditClick
     end
@@ -90,8 +90,8 @@ object TfrmProducts: TTfrmProducts
       Left = 170
       Top = 6
       Width = 75
-      Height = 25
-      Caption = 'Delete'
+      Height = 36
+      Caption = #55357#56785' Delete'
       TabOrder = 2
       OnClick = btnDeleteClick
     end
@@ -99,8 +99,8 @@ object TfrmProducts: TTfrmProducts
       Left = 251
       Top = 6
       Width = 75
-      Height = 25
-      Caption = 'Refresh'
+      Height = 36
+      Caption = #55357#56580' Refresh'
       TabOrder = 3
       OnClick = btnRefreshClick
     end

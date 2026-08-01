@@ -232,6 +232,10 @@ WarehouseManagement
 
 ![Login Screen](Images/Screenshots/LoginForm.png)
 
+## MainForm
+
+![MainForm Screen](Images/Screenshots/mainForm.png)
+
 ---
 
 # Roadmap

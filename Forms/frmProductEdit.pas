@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.DBCtrls;
 
 type
   TTfrmProductEdit = class(TForm)
@@ -24,12 +24,12 @@ type
     edtProductName: TEdit;
     edtBarcode: TEdit;
     chkActive: TCheckBox;
-    cmbCategory: TComboBox;
-    cmbUnit: TComboBox;
     edtPurchasePrice: TEdit;
     edtSalePrice: TEdit;
     edtMinStock: TEdit;
     memDescription: TMemo;
+    lkpCategory: TDBLookupComboBox;
+    lkpUnit: TDBLookupComboBox;
     procedure btnCancelClick(Sender: TObject);
     procedure btnSaveClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -69,10 +69,24 @@ end;
 
 procedure TTfrmProductEdit.btnSaveClick(Sender: TObject);
 begin
-  if not ValidateData then
-    Exit;
+  try
 
-  SaveProduct;
+    if not ValidateData then
+      Exit;
+
+    SaveProduct;
+
+  except
+    on E: Exception do
+    begin
+      MessageDlg(
+        E.Message,
+        mtError,
+        [mbOK],
+        0
+      );
+    end;
+  end;
 end;
 
 procedure TTfrmProductEdit.ClearControls;
@@ -81,8 +95,8 @@ begin
   edtProductName.Clear;
   edtBarcode.Clear;
 
-  cmbCategory.ItemIndex := -1;
-  cmbUnit.ItemIndex := -1;
+  lkpCategory.KeyValue := Null;
+  lkpUnit.KeyValue := Null;
 
   edtPurchasePrice.Text := '0';
   edtSalePrice.Text := '0';
@@ -111,7 +125,35 @@ end;
 
 procedure TTfrmProductEdit.FormShow(Sender: TObject);
 begin
+TdmProducts.qryCategories.Close;
+  TdmProducts.qryCategories.Open;
+
+  TdmProducts.qryUnits.Close;
+  TdmProducts.qryUnits.Open;
+
+
+  lkpCategory.ListSource :=
+    TdmProducts.dsCategories;
+
+  lkpCategory.KeyField :=
+    'CategoryID';
+
+  lkpCategory.ListField :=
+    'CategoryName';
+
+
+  lkpUnit.ListSource :=
+    TdmProducts.dsUnits;
+
+  lkpUnit.KeyField :=
+    'UnitID';
+
+  lkpUnit.ListField :=
+    'UnitName';
+
+
   edtProductCode.SetFocus;
+
 end;
 
 procedure TTfrmProductEdit.LoadProduct;
@@ -120,24 +162,29 @@ begin
     Exit;
 
  with TdmProducts.qryLookup do
-begin
-  edtProductCode.Text := FieldByName('ProductCode').AsString;
-  edtProductName.Text := FieldByName('ProductName').AsString;
-  edtBarcode.Text := FieldByName('Barcode').AsString;
+ begin
+   edtProductCode.Text := FieldByName('ProductCode').AsString;
+   edtProductName.Text := FieldByName('ProductName').AsString;
+   edtBarcode.Text := FieldByName('Barcode').AsString;
+   lkpCategory.KeyValue :=
+  FieldByName('CategoryID').Value;
 
-  edtPurchasePrice.Text :=
-    FormatFloat('#,##0.##', FieldByName('PurchasePrice').AsFloat);
+lkpUnit.KeyValue :=
+  FieldByName('UnitID').Value;
 
-  edtSalePrice.Text :=
-    FormatFloat('#,##0.##', FieldByName('SalePrice').AsFloat);
+   edtPurchasePrice.Text :=
+   FormatFloat('#,##0.##', FieldByName('PurchasePrice').AsFloat);
 
-  edtMinStock.Text :=
-    FormatFloat('#,##0.##', FieldByName('MinStock').AsFloat);
+   edtSalePrice.Text :=
+   FormatFloat('#,##0.##', FieldByName('SalePrice').AsFloat);
 
-  memDescription.Text := FieldByName('Description').AsString;
+   edtMinStock.Text :=
+   FormatFloat('#,##0.##', FieldByName('MinStock').AsFloat);
 
-  chkActive.Checked := FieldByName('IsActive').AsBoolean;
-end;
+   memDescription.Text := FieldByName('Description').AsString;
+
+   chkActive.Checked := FieldByName('IsActive').AsBoolean;
+ end;
 end;
 
 
@@ -157,16 +204,18 @@ procedure TTfrmProductEdit.SaveProduct;
 begin
   if FProductID = 0 then
   begin
-    TdmProducts.InsertProduct(
-      edtProductCode.Text,
-      edtProductName.Text,
-      edtBarcode.Text,
-      edtPurchasePrice.Text,
-      edtSalePrice.Text,
-      edtMinStock.Text,
-      memDescription.Text,
-      chkActive.Checked
-    );
+TdmProducts.InsertProduct(
+  edtProductCode.Text,
+  edtProductName.Text,
+  edtBarcode.Text,
+  Integer(lkpCategory.KeyValue),
+  Integer(lkpUnit.KeyValue),
+  edtPurchasePrice.Text,
+  edtSalePrice.Text,
+  edtMinStock.Text,
+  memDescription.Text,
+  chkActive.Checked
+);
   end
   else
   begin
@@ -175,6 +224,8 @@ begin
       edtProductCode.Text,
       edtProductName.Text,
       edtBarcode.Text,
+      Integer(lkpCategory.KeyValue),
+      Integer(lkpUnit.KeyValue),
       edtPurchasePrice.Text,
       edtSalePrice.Text,
       edtMinStock.Text,
@@ -185,20 +236,87 @@ begin
 
   ModalResult := mrOk;
 end;
-
 function TTfrmProductEdit.ValidateData: Boolean;
 begin
   Result := False;
+
 
   ValidateRequired(
     edtProductCode,
     'Product Code is required.'
   );
 
+
   ValidateRequired(
     edtProductName,
     'Product Name is required.'
   );
+
+
+  if VarIsNull(lkpCategory.KeyValue) then
+  begin
+    MessageDlg(
+      'Category is required.',
+      mtWarning,
+      [mbOK],
+      0
+    );
+
+    lkpCategory.SetFocus;
+    Exit;
+  end;
+
+
+  if VarIsNull(lkpUnit.KeyValue) then
+  begin
+    MessageDlg(
+      'Unit is required.',
+      mtWarning,
+      [mbOK],
+      0
+    );
+
+    lkpUnit.SetFocus;
+    Exit;
+  end;
+
+
+  // Product Code Duplicate Check
+  if TdmProducts.ProductCodeExists(
+     edtProductCode.Text,
+     FProductID
+  ) then
+  begin
+    MessageDlg(
+      'Product Code already exists.',
+      mtWarning,
+      [mbOK],
+      0
+    );
+
+    edtProductCode.SetFocus;
+    Exit;
+  end;
+
+
+  // Barcode Duplicate Check (Optional)
+  if (Trim(edtBarcode.Text) <> '') and
+     TdmProducts.BarcodeExists(
+       edtBarcode.Text,
+       FProductID
+     ) then
+  begin
+    MessageDlg(
+      'Barcode already exists.',
+      mtWarning,
+      [mbOK],
+      0
+    );
+
+    edtBarcode.SetFocus;
+    Exit;
+  end;
+
 
   if StrToFloatDef(edtPurchasePrice.Text, -1) < 0 then
   begin
@@ -213,6 +331,7 @@ begin
     Exit;
   end;
 
+
   if StrToFloatDef(edtSalePrice.Text, -1) < 0 then
   begin
     MessageDlg(
@@ -225,6 +344,7 @@ begin
     edtSalePrice.SetFocus;
     Exit;
   end;
+
 
   if StrToFloatDef(edtMinStock.Text, -1) < 0 then
   begin
@@ -240,25 +360,8 @@ begin
   end;
 
 
-  if TdmProducts.ProductCodeExists(
-     edtProductCode.Text,
-     FProductID
-   ) then
-begin
-  MessageDlg(
-    'Product Code already exists.',
-    mtWarning,
-    [mbOK],
-    0
-  );
-
-  edtProductCode.SetFocus;
-  Exit;
-end;
-
   Result := True;
 end;
-
 procedure TTfrmProductEdit.ValidateRequired(AControl: TWinControl;
   const AMessage: string);
 begin

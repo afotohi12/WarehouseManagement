@@ -5,8 +5,7 @@ interface
 uses
   System.SysUtils,
   System.IniFiles,
-  FireDAC.Comp.Client,
-  Vcl.Dialogs;
+  FireDAC.Comp.Client;
 
 type
   TConnectionManager = class
@@ -76,6 +75,8 @@ begin
 end;
 
 class procedure TConnectionManager.Connect(AConnection: TFDConnection);
+var
+  ErrorMessage: string;
 begin
 
   if not Assigned(AConnection) then
@@ -91,9 +92,42 @@ begin
     except
 
       on E: Exception do
+      begin
 
-        raise Exception.Create('Cannot connect to SQL Server:' + sLineBreak +
-          E.Message);
+        ErrorMessage := LowerCase(E.Message);
+
+        if Pos('login failed', ErrorMessage) > 0 then
+        begin
+          raise Exception.Create(
+            'Invalid username or password.'
+          );
+        end
+        else if (Pos('server was not found', ErrorMessage) > 0) or
+                (Pos('network-related', ErrorMessage) > 0) or
+                (Pos('error 26', ErrorMessage) > 0) or
+                (Pos('error 40', ErrorMessage) > 0) then
+        begin
+          raise Exception.Create(
+            'SQL Server is not available.' + sLineBreak +
+            'Please make sure SQL Server is installed and running.'
+          );
+        end
+        else if Pos('cannot open database', ErrorMessage) > 0 then
+        begin
+          raise Exception.Create(
+            'Database cannot be opened.' + sLineBreak +
+            'Please check database configuration.'
+          );
+        end
+        else
+        begin
+          raise Exception.Create(
+            'Unable to connect to SQL Server.' + sLineBreak +
+            E.Message
+          );
+        end;
+
+      end;
 
     end;
 

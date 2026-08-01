@@ -28,7 +28,8 @@ uses
   frmProducts in 'Forms\frmProducts.pas' {TfrmProductEdit},
   frmProductEdit in 'Forms\frmProductEdit.pas' {Form3},
   dmProducts in 'Data\dmProducts.pas' {DataModule1: TDataModule},
-  uGridHelper in 'Core\UI\uGridHelper.pas';
+  uGridHelper in 'Core\UI\uGridHelper.pas',
+  frDashboardCard in 'Forms\Frames\frDashboardCard.pas' {frDashboardCard: TfrDashboardCard};
 
 {$R *.res}
 

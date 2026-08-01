@@ -26,6 +26,8 @@ type
     procedure DBGrid1DblClick(Sender: TObject);
     procedure btnRefreshClick(Sender: TObject);
     procedure edtSearchChange(Sender: TObject);
+    procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
 
   private
     { Private declarations }
@@ -59,6 +61,9 @@ begin
       TdmProducts.qryProducts.FieldByName('ProductID').AsInteger
     );
   end;
+  TGridHelper.ApplyStyle(DBGrid1);
+  TGridHelper.SetupColumns(DBGrid1);
+
 end;
 
 procedure TTfrmProducts.btnEditClick(Sender: TObject);
@@ -93,7 +98,6 @@ begin
   finally
     Free;
   end;
-
   TdmProducts.RefreshProducts;
   TGridHelper.ApplyStyle(DBGrid1);
   TGridHelper.SetupColumns(DBGrid1);
@@ -122,26 +126,39 @@ begin
   TdmProducts.RefreshProducts;
 end;
 
+procedure TTfrmProducts.DBGrid1DrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  inherited;
+  if gdSelected in State then
+    DBGrid1.Canvas.Brush.Color := $00FFD8A8
+  else
+  if Odd(DBGrid1.DataSource.DataSet.RecNo) then
+    DBGrid1.Canvas.Brush.Color := clWhite
+  else
+    DBGrid1.Canvas.Brush.Color := $00F5F5F5;
+
+  DBGrid1.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+end;
+
 procedure TTfrmProducts.edtSearchChange(Sender: TObject);
 begin
   inherited;
   TdmProducts.SearchProducts(
     edtSearch.Text
   );
+
+  TGridHelper.ApplyStyle(DBGrid1);
+  TGridHelper.SetupColumns(DBGrid1);
 end;
 
 procedure TTfrmProducts.FormCreate(Sender: TObject);
 begin
   inherited;
- DBGrid1.DataSource := TdmProducts.dsProducts;
-
-
-
-   TdmProducts.RefreshProducts;
-   TGridHelper.ApplyStyle(DBGrid1);
-   TGridHelper.SetupColumns(DBGrid1);
-
-
+  DBGrid1.DataSource := TdmProducts.dsProducts;
+  TdmProducts.RefreshProducts;
+  TGridHelper.ApplyStyle(DBGrid1);
+  TGridHelper.SetupColumns(DBGrid1);
 end;
 
 end.

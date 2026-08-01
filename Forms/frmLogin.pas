@@ -62,6 +62,7 @@ begin
 
   end
   else
+  begin
     MessageDlg(
       'UserName Or Password Is Wrong !',
       mtError,
@@ -69,6 +70,8 @@ begin
       0
     );
 
+    edtPassword.Text := '';
+   end;
 end;
 
 procedure TTfrmLogin.FormCreate(Sender: TObject);
@@ -88,6 +91,8 @@ begin
 
   chkRememberMe.Checked :=
     Remember;
+
+  FormStyle := fsStayOnTop;
 end;
 
 procedure TTfrmLogin.FormShow(Sender: TObject);

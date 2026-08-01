@@ -232,6 +232,7 @@ BEGIN
 END
 GO
 
+
 ------------------------------------------------------------
 -- Administrator
 ------------------------------------------------------------
@@ -960,6 +961,7 @@ ON AuditLog(CreateDate);
 END
 GO
 
+
 /*VERSION:9*/
 
 ------------------------------------------------------------
@@ -980,7 +982,6 @@ UPDATE Users
 SET IsAdmin = 1
 WHERE UserName = 'admin';
 GO
-
 
 
 /*VERSION:10*/
@@ -1030,3 +1031,122 @@ BEGIN
 
 END
 
+/*VERSION:11*/
+
+------------------------------------------------------------
+--Feature : Add Categories AND Units Table 
+------------------------------------------------------------
+
+IF OBJECT_ID('dbo.Categories', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.Categories
+    (
+        CategoryID   INT IDENTITY(1,1) NOT NULL,
+        CategoryName NVARCHAR(100) NOT NULL,
+        Description  NVARCHAR(250) NULL,
+        IsActive     BIT NOT NULL CONSTRAINT DF_Categories_IsActive DEFAULT(1),
+        CreatedAt    DATETIME2 NOT NULL CONSTRAINT DF_Categories_CreatedAt DEFAULT(SYSDATETIME()),
+        UpdatedAt    DATETIME2 NULL,
+
+        CONSTRAINT PK_Categories PRIMARY KEY CLUSTERED (CategoryID),
+        CONSTRAINT UQ_Categories_CategoryName UNIQUE (CategoryName)
+    );
+END;
+
+IF NOT EXISTS (SELECT 1 FROM dbo.Categories)
+BEGIN
+    INSERT INTO dbo.Categories (CategoryName)
+    VALUES
+        ('Electronics'),
+        ('Food'),
+        ('Beverages'),
+        ('Office Supplies'),
+        ('Home Appliances'),
+        ('Health & Beauty'),
+        ('Automotive'),
+        ('Clothing'),
+        ('Tools'),
+        ('Other');
+END;
+
+IF OBJECT_ID('dbo.Units', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.Units
+    (
+        UnitID       INT IDENTITY(1,1) NOT NULL,
+        UnitName     NVARCHAR(50) NOT NULL,
+        UnitSymbol   NVARCHAR(10) NOT NULL,
+        IsActive     BIT NOT NULL CONSTRAINT DF_Units_IsActive DEFAULT(1),
+        CreatedAt    DATETIME2 NOT NULL CONSTRAINT DF_Units_CreatedAt DEFAULT(SYSDATETIME()),
+        UpdatedAt    DATETIME2 NULL,
+
+        CONSTRAINT PK_Units PRIMARY KEY CLUSTERED (UnitID),
+        CONSTRAINT UQ_Units_UnitName UNIQUE (UnitName),
+        CONSTRAINT UQ_Units_UnitSymbol UNIQUE (UnitSymbol)
+    );
+END;
+
+IF NOT EXISTS (SELECT 1 FROM dbo.Units)
+BEGIN
+    INSERT INTO dbo.Units (UnitName, UnitSymbol)
+    VALUES
+        ('Piece', 'pcs'),
+        ('Box', 'box'),
+        ('Carton', 'ctn'),
+        ('Pack', 'pack'),
+        ('Kilogram', 'kg'),
+        ('Gram', 'g'),
+        ('Liter', 'L'),
+        ('Milliliter', 'ml'),
+        ('Meter', 'm'),
+        ('Centimeter', 'cm'),
+        ('Roll', 'roll'),
+        ('Set', 'set'),
+        ('Pair', 'pair'),
+        ('Bottle', 'btl'),
+        ('Can', 'can');
+END;
+
+
+
+/*VERSION:12*/
+
+------------------------------------------------------------
+--Feature : Product Foreign Keys 
+------------------------------------------------------------
+
+IF COL_LENGTH('dbo.Products', 'CategoryID') IS NULL
+BEGIN
+    ALTER TABLE dbo.Products
+    ADD CategoryID INT NULL;
+END;
+
+IF COL_LENGTH('dbo.Products', 'UnitID') IS NULL
+BEGIN
+    ALTER TABLE dbo.Products
+    ADD UnitID INT NULL;
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.foreign_keys
+    WHERE name = 'FK_Products_Categories'
+)
+BEGIN
+    ALTER TABLE dbo.Products
+    ADD CONSTRAINT FK_Products_Categories
+        FOREIGN KEY (CategoryID)
+        REFERENCES dbo.Categories(CategoryID);
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.foreign_keys
+    WHERE name = 'FK_Products_Units'
+)
+BEGIN
+    ALTER TABLE dbo.Products
+    ADD CONSTRAINT FK_Products_Units
+        FOREIGN KEY (UnitID)
+        REFERENCES dbo.Units(UnitID);
+END;

@@ -143,40 +143,26 @@ object TfrmProductEdit: TTfrmProductEdit
     Caption = 'chkActive'
     TabOrder = 5
   end
-  object cmbCategory: TComboBox
-    Left = 154
-    Top = 138
-    Width = 145
-    Height = 23
-    TabOrder = 6
-  end
-  object cmbUnit: TComboBox
-    Left = 154
-    Top = 168
-    Width = 145
-    Height = 23
-    TabOrder = 7
-  end
   object edtPurchasePrice: TEdit
     Left = 154
     Top = 197
     Width = 121
     Height = 23
-    TabOrder = 8
+    TabOrder = 6
   end
   object edtSalePrice: TEdit
     Left = 154
     Top = 240
     Width = 121
     Height = 23
-    TabOrder = 9
+    TabOrder = 7
   end
   object edtMinStock: TEdit
     Left = 154
     Top = 277
     Width = 121
     Height = 23
-    TabOrder = 10
+    TabOrder = 8
   end
   object memDescription: TMemo
     Left = 96
@@ -185,6 +171,21 @@ object TfrmProductEdit: TTfrmProductEdit
     Height = 89
     Lines.Strings = (
       '')
+    TabOrder = 9
+  end
+  object lkpCategory: TDBLookupComboBox
+    Left = 154
+    Top = 138
+    Width = 121
+    Height = 23
+    ListSource = TdmProducts.dsCategories
+    TabOrder = 10
+  end
+  object lkpUnit: TDBLookupComboBox
+    Left = 154
+    Top = 167
+    Width = 121
+    Height = 23
     TabOrder = 11
   end
 end

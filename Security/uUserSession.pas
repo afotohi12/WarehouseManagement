@@ -14,6 +14,8 @@ type
     class var FEmail: string;
     class var FIsAdmin: Boolean;
     class var FLoginTime: TDateTime;
+    class var FRoleName: string;
+    class var FDisplayName: string;
 
   public
 
@@ -26,7 +28,8 @@ type
     );
 
     class procedure Logout;
-
+    class property RoleName: string read FRoleName;
+    class property DisplayName: string read FDisplayName;
     class function IsLoggedIn: Boolean;
 
     class property UserID: Integer read FUserID;
@@ -48,7 +51,6 @@ class procedure TUserSession.Login(
   AIsAdmin: Boolean
 );
 begin
-
   FUserID := AUserID;
   FUserName := AUserName;
   FFullName := AFullName;
@@ -56,6 +58,15 @@ begin
   FIsAdmin := AIsAdmin;
   FLoginTime := Now;
 
+  if AIsAdmin then
+    FRoleName := 'Administrator'
+  else
+    FRoleName := 'User';
+
+  if Trim(AFullName) <> '' then
+    FDisplayName := AFullName
+  else
+    FDisplayName := AUserName;
 end;
 
 class procedure TUserSession.Logout;

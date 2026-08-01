@@ -6,7 +6,8 @@ uses
   Vcl.DBGrids,
   Vcl.Grids,
   Vcl.Graphics,
-  System.SysUtils;
+  System.SysUtils,
+  Data.DB;
 
 type
   TGridHelper = class
@@ -62,35 +63,90 @@ begin
 end;
        *)
 class procedure TGridHelper.SetupColumns(AGrid: TDBGrid);
+var
+  I: Integer;
 begin
   if AGrid.Columns.Count = 0 then
     Exit;
 
-  AGrid.Columns[0].Visible := False; // ProductID
+  for I := 0 to AGrid.Columns.Count - 1 do
+  begin
 
-  AGrid.Columns[1].Title.Caption := 'Code';
-  AGrid.Columns[1].Width := 110;
-
-  AGrid.Columns[2].Title.Caption := 'Product';
-  AGrid.Columns[2].Width := 240;
-
-  AGrid.Columns[3].Title.Caption := 'Barcode';
-  AGrid.Columns[3].Width := 150;
-
-  AGrid.Columns[4].Title.Caption := 'Purchase';
-  AGrid.Columns[4].Width := 90;
+    if SameText(AGrid.Columns[I].FieldName, 'ProductID') then
+      AGrid.Columns[I].Visible := False;
 
 
-  AGrid.Columns[5].Title.Caption := 'Sale';
-  AGrid.Columns[5].Width := 90;
+    if SameText(AGrid.Columns[I].FieldName, 'CategoryID') then
+      AGrid.Columns[I].Visible := False;
 
 
-  AGrid.Columns[6].Title.Caption := 'Min';
-  AGrid.Columns[6].Width := 70;
+    if SameText(AGrid.Columns[I].FieldName, 'UnitID') then
+      AGrid.Columns[I].Visible := False;
 
 
-  AGrid.Columns[7].Title.Caption := 'Active';
-  AGrid.Columns[7].Width := 60;
+    if SameText(AGrid.Columns[I].FieldName, 'ProductCode') then
+    begin
+      AGrid.Columns[I].Title.Caption := 'Code';
+      AGrid.Columns[I].Width := 100;
+    end;
+
+
+    if SameText(AGrid.Columns[I].FieldName, 'ProductName') then
+    begin
+      AGrid.Columns[I].Title.Caption := 'Product';
+      AGrid.Columns[I].Width := 220;
+    end;
+
+
+    if SameText(AGrid.Columns[I].FieldName, 'Barcode') then
+    begin
+      AGrid.Columns[I].Title.Caption := 'Barcode';
+      AGrid.Columns[I].Width := 130;
+    end;
+
+
+    if SameText(AGrid.Columns[I].FieldName, 'CategoryName') then
+    begin
+      AGrid.Columns[I].Title.Caption := 'Category';
+      AGrid.Columns[I].Width := 130;
+    end;
+
+
+    if SameText(AGrid.Columns[I].FieldName, 'UnitName') then
+    begin
+      AGrid.Columns[I].Title.Caption := 'Unit';
+      AGrid.Columns[I].Width := 80;
+    end;
+
+
+    if SameText(AGrid.Columns[I].FieldName, 'PurchasePrice') then
+    begin
+      AGrid.Columns[I].Title.Caption := 'Purchase';
+      AGrid.Columns[I].Width := 90;
+    end;
+
+
+    if SameText(AGrid.Columns[I].FieldName, 'SalePrice') then
+    begin
+      AGrid.Columns[I].Title.Caption := 'Sale';
+      AGrid.Columns[I].Width := 90;
+    end;
+
+
+    if SameText(AGrid.Columns[I].FieldName, 'MinStock') then
+    begin
+      AGrid.Columns[I].Title.Caption := 'Min';
+      AGrid.Columns[I].Width := 70;
+    end;
+
+
+    if SameText(AGrid.Columns[I].FieldName, 'IsActive') then
+    begin
+      AGrid.Columns[I].Title.Caption := 'Active';
+      AGrid.Columns[I].Width := 60;
+    end;
+
+  end;
 
 end;
 

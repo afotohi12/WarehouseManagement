@@ -6,7 +6,9 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs,FireDAC.DApt,FireDAC.Phys,FireDAC.Phys.MSSQL,FireDAC.Phys.MSSQLDef,
   FireDAC.Stan.Def,FireDAC.Stan.Async,FireDAC.Stan.Param,FireDAC.UI.Intf,
-  Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.Buttons, Vcl.StdCtrls,uFormHost,frmDashboard;
+  Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.Buttons, Vcl.StdCtrls,uFormHost,frmDashboard,
+  System.Actions, Vcl.ActnList, System.ImageList, Vcl.ImgList,
+  Vcl.VirtualImageList, Vcl.BaseImageCollection, Vcl.ImageCollection;
 
 type
   TfrmMain = class(TForm)
@@ -16,7 +18,6 @@ type
     StatusBar1: TStatusBar;
     lblTitle: TLabel;
     lblUser: TLabel;
-    btnLogout: TSpeedButton;
     btnDashboard: TSpeedButton;
     btnProducts: TSpeedButton;
     btnCustomers: TSpeedButton;
@@ -28,12 +29,26 @@ type
     btnSettings: TSpeedButton;
     pnlWorkspace: TPanel;
     lblPageTitle: TLabel;
-    lblUserType: TLabel;
+    lblSubTitle: TLabel;
+    ActionList1: TActionList;
+    VirtualImageList1: TVirtualImageList;
+    actDashboard: TAction;
+    actProducts: TAction;
+    actCustomers: TAction;
+    actSuppliers: TAction;
+    actWarehouse: TAction;
+    actInvoices: TAction;
+    actReports: TAction;
+    actUsers: TAction;
+    actSettings: TAction;
+    actLogout: TAction;
+    ImageCollection1: TImageCollection;
+    btnLogout: TSpeedButton;
     procedure FormCreate(Sender: TObject);
-    procedure btnDashboardClick(Sender: TObject);
-    procedure btnProductsClick(Sender: TObject);
-    procedure btnLogoutClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure actDashboardExecute(Sender: TObject);
+    procedure actProductsExecute(Sender: TObject);
+    procedure actLogoutExecute(Sender: TObject);
 private
     FDashboard: TTfrmDashboard;
     //procedure ShowDashboard;
@@ -58,23 +73,23 @@ implementation
 
 uses frmProducts, uAuthenticationService, uUserSession;
 
-procedure TfrmMain.btnDashboardClick(Sender: TObject);
+procedure TfrmMain.actDashboardExecute(Sender: TObject);
 begin
   lblPageTitle.Caption := 'Dashboard';
   TFormHost.OpenForm(pnlWorkspace, TTfrmDashboard);
   OpenPage(btnDashboard, 'Dashboard',TTfrmDashboard);
 end;
 
-procedure TfrmMain.btnLogoutClick(Sender: TObject);
+procedure TfrmMain.actLogoutExecute(Sender: TObject);
 begin
  TAuthenticationService.Logout;
 
   Close;
 end;
 
-procedure TfrmMain.btnProductsClick(Sender: TObject);
+procedure TfrmMain.actProductsExecute(Sender: TObject);
 begin
-  OpenPage(
+   OpenPage(
     btnProducts,
     'Products',
     TTfrmProducts
@@ -112,24 +127,34 @@ begin
   btnSettings.OnMouseEnter := MenuMouseEnter;
   btnSettings.OnMouseLeave := MenuMouseLeave;
 
-  btnDashboardClick(nil);
+  btnLogout.OnMouseEnter := MenuMouseEnter;
+  btnLogout.OnMouseLeave := MenuMouseLeave;
+
+  pnlMenu.BevelOuter := bvNone;
+
+  pnlHeader.Color := clWhite;
+  pnlHeader.BevelOuter := bvNone;
+
+  pnlWorkspace.Color := RGB(246,248,252);
+  pnlWorkspace.BevelOuter := bvNone;
+
+
 end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
 begin
-  if TUserSession.IsLoggedIn then
-    lblUser.Caption := TUserSession.FullName
-  else
-    lblUser.Caption := 'Guest';
+  lblUser.Caption := TUserSession.DisplayName;
 
-  if TUserSession.IsAdmin then
-    lblUserType.Caption := 'Administrator'
-  else
-    lblUserType.Caption := 'User';
 
   StatusBar1.Panels[0].Text := 'Database: Connected';
   StatusBar1.Panels[1].Text := 'Ready';
   StatusBar1.Panels[2].Text := 'Warehouse Management v1.0';
+  StatusBar1.Panels[3].Text := 'Role : '+TUserSession.RoleName;
+
+  lblPageTitle.Caption := 'Dashboard';
+  TFormHost.OpenForm(pnlWorkspace, TTfrmDashboard);
+  OpenPage(btnDashboard, 'Dashboard',TTfrmDashboard);
+
 
   end;
 
@@ -137,8 +162,8 @@ procedure TfrmMain.MenuMouseEnter(Sender: TObject);
 begin
   with Sender as TSpeedButton do
   begin
-    Flat := False;
     Font.Style := [fsBold];
+    Font.Color := $00FFD966;
   end;
 end;
 
@@ -146,8 +171,8 @@ procedure TfrmMain.MenuMouseLeave(Sender: TObject);
 begin
   with Sender as TSpeedButton do
   begin
-    Flat := True;
     Font.Style := [];
+    Font.Color := clBlack;
   end;
 end;
 
@@ -161,25 +186,18 @@ end;
 procedure TfrmMain.SelectMenu(AButton: TSpeedButton);
 var
   I: Integer;
+  Btn: TSpeedButton;
 begin
   for I := 0 to pnlMenu.ControlCount - 1 do
     if pnlMenu.Controls[I] is TSpeedButton then
-      TSpeedButton(pnlMenu.Controls[I]).Font.Style := [];
+    begin
+      Btn := TSpeedButton(pnlMenu.Controls[I]);
+      Btn.Font.Style := [];
+      Btn.Font.Color := clBlack;
+    end;
 
   AButton.Font.Style := [fsBold];
+  AButton.Font.Color := $00FFD966;
 end;
- (*
-procedure TfrmMain.ShowDashboard;
-begin
-  if not Assigned(FDashboard) then
-  begin
-    FDashboard := TTfrmDashboard.Create(Self);
-    FDashboard.Parent := pnlWorkspace;
-    FDashboard.Align := alClient;
-    FDashboard.BorderStyle := bsNone;
-  end;
 
-  FDashboard.Show;
-end;
-   *)
 end.
