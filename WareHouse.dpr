@@ -27,9 +27,12 @@ uses
   uUIHelper in 'Core\UI\uUIHelper.pas',
   frmProducts in 'Forms\frmProducts.pas' {TfrmProductEdit},
   frmProductEdit in 'Forms\frmProductEdit.pas' {Form3},
-  dmProducts in 'Data\dmProducts.pas' {DataModule1: TDataModule},
+  dmProducts in 'Data\dmProducts.pas' {TdmProducts: TDataModule},
   uGridHelper in 'Core\UI\uGridHelper.pas',
-  frDashboardCard in 'Forms\Frames\frDashboardCard.pas' {frDashboardCard: TfrDashboardCard};
+  frDashboardCard in 'Forms\Frames\frDashboardCard.pas' {frDashboardCard: TFrame},
+  dmPartners in 'Data\dmPartners.pas' {TTdmPartners: TDataModule},
+  frmPartners in 'Forms\frmPartners.pas' {TfrmPartners: TTfrmPartners},
+  frmPartnerEdit in 'Forms\frmPartnerEdit.pas' {Form2};
 
 {$R *.res}
 

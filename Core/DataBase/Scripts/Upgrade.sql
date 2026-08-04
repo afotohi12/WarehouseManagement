@@ -1150,3 +1150,204 @@ BEGIN
         FOREIGN KEY (UnitID)
         REFERENCES dbo.Units(UnitID);
 END;
+
+
+
+/*VERSION:13*/
+
+------------------------------------------------------------
+--Feature : Add Partners Table 
+------------------------------------------------------------
+
+CREATE TABLE Partners
+(
+    PartnerID INT IDENTITY(1,1) PRIMARY KEY,
+
+    PartnerCode NVARCHAR(50) NOT NULL,
+    PartnerName NVARCHAR(200) NOT NULL,
+
+    PartnerType TINYINT NOT NULL DEFAULT 1,
+    -- 1 = Company
+    -- 2 = Person
+
+    NationalID NVARCHAR(50) NULL,
+    TaxNumber NVARCHAR(50) NULL,
+
+    Phone NVARCHAR(50) NULL,
+    Mobile NVARCHAR(50) NULL,
+    Email NVARCHAR(100) NULL,
+
+    Address NVARCHAR(500) NULL,
+    City NVARCHAR(100) NULL,
+
+    IsCustomer BIT NOT NULL DEFAULT 0,
+    IsSupplier BIT NOT NULL DEFAULT 0,
+    IsBroker BIT NOT NULL DEFAULT 0,
+
+    IsActive BIT NOT NULL DEFAULT 1,
+
+    CreatedAt DATETIME NOT NULL DEFAULT GETDATE(),
+    UpdatedAt DATETIME NULL
+);
+GO
+
+
+CREATE UNIQUE INDEX UX_Partners_PartnerCode
+ON Partners(PartnerCode);
+GO
+
+-----Insert Values To Partners Table 
+INSERT INTO Partners
+(
+    PartnerCode,
+    PartnerName,
+    PartnerType,
+    NationalID,
+    TaxNumber,
+    Phone,
+    Mobile,
+    Email,
+    Address,
+    City,
+    IsCustomer,
+    IsSupplier,
+    IsBroker
+)
+VALUES
+
+-- Customer + Supplier
+(
+    'P0001',
+    'Global Tech Solutions Ltd',
+    1,
+    'GB123456789',
+    'TAX-UK-10001',
+    '+44 20 7946 0958',
+    '+44 7700 900101',
+    'info@globaltechsolutions.com',
+    '25 King Street, Business District',
+    'London',
+    1,
+    1,
+    0
+),
+
+-- Customer
+(
+    'P0002',
+    'Nordic Electronics GmbH',
+    1,
+    'DE987654321',
+    'DE-TAX-20002',
+    '+49 40 123456',
+    '+49 151 98765432',
+    'contact@nordicelectronics.de',
+    'HafenCity Area, Warehouse Road 12',
+    'Hamburg',
+    1,
+    0,
+    0
+),
+
+-- Supplier
+(
+    'P0003',
+    'Prime Industrial Supplies Inc',
+    1,
+    'US456789123',
+    'US-TAX-30003',
+    '+1 212 555 0198',
+    '+1 917 555 0101',
+    'sales@primeindustrialsupplies.com',
+    '78 Industrial Avenue',
+    'New York',
+    0,
+    1,
+    0
+),
+
+-- Broker + Customer
+(
+    'P0004',
+    'Michael Anderson Trading',
+    2,
+    'UK789456123',
+    NULL,
+    '+44 161 555 2020',
+    '+44 7400 555202',
+    'michael.anderson@tradingmail.com',
+    'Manchester City Center',
+    'Manchester',
+    1,
+    0,
+    1
+),
+
+-- Customer + Supplier + Broker
+(
+    'P0005',
+    'Euro Distribution Network BV',
+    1,
+    'NL112233445',
+    'NL-TAX-50005',
+    '+31 20 5557788',
+    '+31 6 55577889',
+    'office@eurodistribution.nl',
+    'Main Distribution Park 45',
+    'Amsterdam',
+    1,
+    1,
+    1
+),
+
+-- Customer
+(
+    'P0006',
+    'Smart Retail Group',
+    1,
+    'FR998877665',
+    'FR-TAX-60006',
+    '+33 1 44556677',
+    '+33 6 44556677',
+    'contact@smartretail.fr',
+    '15 Rue Lafayette',
+    'Paris',
+    1,
+    0,
+    0
+),
+
+-- Supplier
+(
+    'P0007',
+    'Advanced Warehouse Equipment Co',
+    1,
+    'IT556677889',
+    'IT-TAX-70007',
+    '+39 02 778899',
+    '+39 333 778899',
+    'sales@warehouseequipment.it',
+    'Via Milano 120',
+    'Milan',
+    0,
+    1,
+    0
+),
+
+-- Broker
+(
+    'P0008',
+    'Logistics Connection Agency',
+    1,
+    'ES334455667',
+    'ES-TAX-80008',
+    '+34 91 223344',
+    '+34 600 223344',
+    'info@logisticsconnection.es',
+    'Avenida Central 55',
+    'Madrid',
+    0,
+    0,
+    1
+);
+

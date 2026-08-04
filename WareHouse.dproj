@@ -168,7 +168,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Data\dmProducts.pas">
-            <Form>DataModule1</Form>
+            <Form>TdmProducts</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
@@ -177,6 +177,20 @@
             <Form>frDashboardCard</Form>
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Data\dmPartners.pas">
+            <Form>TTdmPartners</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Forms\frmPartners.pas">
+            <Form>TfrmPartners</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TTfrmPartners</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Forms\frmPartnerEdit.pas">
+            <Form>Form2</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
